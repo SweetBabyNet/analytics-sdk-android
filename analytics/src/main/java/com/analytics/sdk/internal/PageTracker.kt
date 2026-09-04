@@ -12,6 +12,9 @@ internal class PageTracker(private val core: AnalyticsCore) {
     private var referPage: String? = null
     private var enterTimeMs: Long = 0L
 
+    /** 当前停留页面名（handler 线程读取），自定义事件用于自动携带 page。 */
+    val currentPageName: String? get() = currentPage
+
     fun onTrackPage(page: String, props: Map<String, Any?>?) {
         endCurrentPage()
         currentPage = page

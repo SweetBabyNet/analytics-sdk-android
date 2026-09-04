@@ -74,8 +74,16 @@ internal class AnalyticsCore(
         if (!enabled) return
         handler.post {
             try {
-                if (!enabled) return@post
-                enqueueOnWorker(buildEvent(name = eventName, type = type, durationMs = durationMs, props = props))
+            if (!enabled) return@post
+            enqueueOnWorker(
+                buildEvent(
+                    name = eventName,
+                    type = type,
+                    page = pageTracker.currentPageName,
+                    durationMs = durationMs,
+                    props = props,
+                )
+            )
                 maybeThresholdFlush()
             } catch (t: Throwable) {
                 Logg.e("track failed", t)
